@@ -32,4 +32,5 @@ ext{
     buildToolsVersion = "30.0.3"
     minSdkVersion = 21
     targetSdkVersion = 29
+    googleAutoServiceDependency = "1.0-rc7"
 }
