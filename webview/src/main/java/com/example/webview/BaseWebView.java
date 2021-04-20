@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.webview.bean.JsParam;
+import com.example.webview.webviewprocess.WebViewProcessTomainDispatcher;
 import com.example.webview.webviewprocess.settings.WebViewDefaultSettings;
 import com.example.webview.webviewprocess.webchromeclient.XiangxueWebviewChromeClient;
 import com.example.webview.webviewprocess.webviewclient.XiangxueWebViewClient;
@@ -40,6 +41,7 @@ public class BaseWebView extends WebView {
     }
 
     private void init() {
+        WebViewProcessTomainDispatcher.getInstance().initAidlConnection();
         WebViewDefaultSettings.getInstance().setSettings(this);
         addJavascriptInterface(this, "xiangxuewebview");
     }
@@ -57,10 +59,11 @@ public class BaseWebView extends WebView {
                 if ("showToast".equalsIgnoreCase(objec.name)) {
                     Object o = new Gson().fromJson(objec.param, Map.class).get("message");
                     Toast.makeText(getContext(), String.valueOf(o), Toast.LENGTH_SHORT).show();
+                }else{
+                    WebViewProcessTomainDispatcher.getInstance().executeCommand(objec.name,new Gson().toJson(objec.param));
                 }
             }
-
         }
-
     }
+
 }

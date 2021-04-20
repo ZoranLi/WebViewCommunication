@@ -11,6 +11,7 @@
             android:name=".WebViewActivity"
             android:process=":xiangxuewebvew"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <service android:name=".mainprocess.MainProcessService"/>
     </application>
     <!--    usesCleartextTraffic 打开https-->
     <uses-permission android:name="android.permission.INTERNET" />
