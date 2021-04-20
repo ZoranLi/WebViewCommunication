@@ -32,5 +32,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.androidXVersion"
     annotationProcessor "com.google.auto.service:auto-service:$rootProject.googleAutoServiceDependency"
     implementation "com.google.auto.service:auto-service:$rootProject.googleAutoServiceDependency"
-
+    api project(":common")//java public
+    //implementation Java：private
 }
