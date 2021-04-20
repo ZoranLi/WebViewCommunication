@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 //                IWebviewService iWebviewService = ServiceLoader.load(IWebviewService.class).iterator().next();
                 IWebviewService iWebviewService = XiangxueServiceLoader.load(IWebviewService.class);
                 if (iWebviewService != null) {
-                    iWebviewService.startActivity(MainActivity.this,"https://www.baidu.com","百度");
+                    iWebviewService.startActivity(MainActivity.this,"https://www.baidu.com","百度",true);
                 }
             }
         });
