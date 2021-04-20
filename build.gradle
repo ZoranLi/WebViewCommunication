@@ -33,4 +33,5 @@ ext{
     minSdkVersion = 21
     targetSdkVersion = 29
     googleAutoServiceDependency = "1.0-rc7"
+    lottieVersion = "2.0.0"
 }

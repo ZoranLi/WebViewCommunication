@@ -2,7 +2,6 @@ package com.example.webview;
 
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebSettings;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +25,11 @@ public class WebViewActivity extends AppCompatActivity {
         dataBinding.ivClose.setOnClickListener(v -> WebViewActivity.this.finish());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        WebViewFragment webViewFragment = WebViewFragment.newInstance(getIntent().getStringExtra(Constans.URL));
+        WebViewFragment webViewFragment = WebViewFragment.newInstance(getIntent().getStringExtra(Constans.URL), true);
         fragmentTransaction.replace(R.id.web_view_fragment, webViewFragment).commit();
+    }
+
+    public void updateTitle(String title) {
+        dataBinding.title.setText(title);
     }
 }

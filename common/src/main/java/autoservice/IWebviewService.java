@@ -10,5 +10,5 @@ import androidx.fragment.app.Fragment;
 public interface IWebviewService {
     void startActivity(Context context, String url, String title, boolean isShowActionBar);
 
-    Fragment getWevViewFragment(String url);
+    Fragment getWevViewFragment(String url,boolean canNativeRefresh);
 }

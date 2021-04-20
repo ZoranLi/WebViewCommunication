@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment;
 import com.example.webview.utils.Constans;
 import com.google.auto.service.AutoService;
 
-import java.net.URL;
-
 import autoservice.IWebviewService;
 
 @AutoService(IWebviewService.class)
@@ -26,7 +24,7 @@ public class WebviewServiceImpl implements IWebviewService {
     }
 
     @Override
-    public Fragment getWevViewFragment(String url) {
-        return WebViewFragment.newInstance(url);
+    public Fragment getWevViewFragment(String url,boolean canNativeRefresh) {
+        return WebViewFragment.newInstance(url,canNativeRefresh);
     }
 }
