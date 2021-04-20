@@ -16,7 +16,6 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataBinding = DataBindingUtil.setContentView(WebViewActivity.this, R.layout.layout_activity_webview);
-//        dataBinding.webView.setJavaScriptEnabled(true);
         WebSettings settings = dataBinding.webView.getSettings();
         settings.setJavaScriptEnabled(true);
         dataBinding.webView.loadUrl("https://www.baidu.com");
