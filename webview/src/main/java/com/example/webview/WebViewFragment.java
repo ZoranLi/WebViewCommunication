@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +15,7 @@ import com.example.base.loadsir.ErrorCallback;
 import com.example.base.loadsir.LoadingCallback;
 import com.example.webview.databinding.LayoutFragmentWebviewBinding;
 import com.example.webview.utils.Constans;
-import com.example.webview.webchromeclient.XiangxueWebviewChromeClient;
-import com.example.webview.webviewclient.XiangxueWebViewClient;
+import com.example.webview.webviewprocess.settings.WebViewDefaultSettings;
 import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
@@ -60,18 +58,17 @@ public class WebViewFragment extends Fragment implements WebViewCallBack, OnRefr
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutFragmentWebviewBinding = DataBindingUtil.inflate(inflater, R.layout.layout_fragment_webview, container, false);
-        WebSettings settings = layoutFragmentWebviewBinding.webView.getSettings();
-        settings.setJavaScriptEnabled(true);
+        WebViewDefaultSettings.getInstance().setSettings(layoutFragmentWebviewBinding.webView);
+        layoutFragmentWebviewBinding.webView.registerWebViewCallBack(this);
         layoutFragmentWebviewBinding.webView.loadUrl(url);
         loadService = LoadSir.getDefault().register(layoutFragmentWebviewBinding.smartRefreshLayout, (Callback.OnReloadListener) v -> {
             loadService.showCallback(LoadingCallback.class);
             layoutFragmentWebviewBinding.webView.reload();
         });
-        layoutFragmentWebviewBinding.webView.setWebViewClient(new XiangxueWebViewClient(this));
-        layoutFragmentWebviewBinding.webView.setWebChromeClient(new XiangxueWebviewChromeClient(this));
         layoutFragmentWebviewBinding.smartRefreshLayout.setEnableRefresh(canNativeRefresh);
         layoutFragmentWebviewBinding.smartRefreshLayout.setOnRefreshListener(this);
         layoutFragmentWebviewBinding.smartRefreshLayout.setEnableLoadMore(false);
+
         return loadService.getLoadLayout();
     }
 

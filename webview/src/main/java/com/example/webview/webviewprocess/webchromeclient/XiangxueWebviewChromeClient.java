@@ -1,6 +1,7 @@
-package com.example.webview.webchromeclient;
+package com.example.webview.webviewprocess.webchromeclient;
 
 import android.util.Log;
+import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
@@ -22,5 +23,11 @@ public class XiangxueWebviewChromeClient extends WebChromeClient {
         } else {
             Log.e(TAG, "WebViewCallBack is null");
         }
+    }
+
+    @Override
+    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+        Log.d(TAG,consoleMessage.message());
+        return super.onConsoleMessage(consoleMessage);
     }
 }

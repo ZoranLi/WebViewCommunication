@@ -1,16 +1,11 @@
 package com.example.webviewcommunication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.base.autoservice.XiangxueServiceLoader;
-import com.example.webview.WebViewActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Iterator;
-import java.util.ServiceLoader;
+import com.example.base.autoservice.XiangxueServiceLoader;
 
 import autoservice.IWebviewService;
 
@@ -32,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
 //                IWebviewService iWebviewService = ServiceLoader.load(IWebviewService.class).iterator().next();
                 IWebviewService iWebviewService = XiangxueServiceLoader.load(IWebviewService.class);
                 if (iWebviewService != null) {
-                    iWebviewService.startActivity(MainActivity.this,"https://www.baidu.com","百度",true);
+//                    iWebviewService.startActivity(MainActivity.this,"https://www.baidu.com","百度",true);
+                    iWebviewService.startDemoHtml(MainActivity.this);
                 }
             }
         });
