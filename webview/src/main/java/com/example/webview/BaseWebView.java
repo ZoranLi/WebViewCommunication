@@ -59,9 +59,25 @@ public class BaseWebView extends WebView {
 //                }else{
 //                    WebViewProcessTomainDispatcher.getInstance().executeCommand(objec.name,new Gson().toJson(objec.param));
 //                }
-                WebViewProcessTomainDispatcher.getInstance().executeCommand(objec.name,new Gson().toJson(objec.param));
+                WebViewProcessTomainDispatcher.getInstance().executeCommand(objec.name,new Gson().toJson(objec.param),this);
             }
         }
     }
+
+
+    public void handleCallback(String callback,String response){
+        if(!TextUtils.isEmpty(callback)){
+
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    String jscode = "javascript:xiaoxuejs.callback('"+callback+"','"+response+"')";
+                    evaluateJavascript(jscode,null);
+                }
+            });
+
+        }
+    }
+
 
 }

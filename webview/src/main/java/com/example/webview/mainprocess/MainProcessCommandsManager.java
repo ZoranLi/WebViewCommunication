@@ -2,6 +2,7 @@ package com.example.webview.mainprocess;
 
 import android.os.RemoteException;
 
+import com.example.webview.ICallbackMainprocessToWebViewPorcessInterface;
 import com.example.webview.IWebviewProcessToMainProcessInterface;
 import com.example.webview.command.Command;
 import com.google.gson.Gson;
@@ -36,12 +37,12 @@ public class MainProcessCommandsManager extends IWebviewProcessToMainProcessInte
         }
     }
 
-    public void executeCommand(String commandName, Map params) {
-        commandHashMap.get(commandName).execute(params);
+    public void executeCommand(String commandName, Map params,ICallbackMainprocessToWebViewPorcessInterface callback) {
+        commandHashMap.get(commandName).execute(params,callback);
     }
 
     @Override
-    public void handleWebCommand(String commandName, String jsonParams) throws RemoteException {
-        MainProcessCommandsManager.getInstance().executeCommand(commandName, new Gson().fromJson(jsonParams, Map.class));
+    public void handleWebCommand(String commandName, String jsonParams, ICallbackMainprocessToWebViewPorcessInterface callback) throws RemoteException {
+        MainProcessCommandsManager.getInstance().executeCommand(commandName, new Gson().fromJson(jsonParams, Map.class),callback);
     }
 }

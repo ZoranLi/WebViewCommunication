@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.example.base.BaseApplication;
+import com.example.webview.ICallbackMainprocessToWebViewPorcessInterface;
 import com.example.webview.command.Command;
 import com.google.auto.service.AutoService;
 
@@ -17,7 +18,7 @@ public class CommandOpenPage implements Command {
     }
 
     @Override
-    public void execute(Map parameters) {
+    public void execute(Map parameters, ICallbackMainprocessToWebViewPorcessInterface callback) {
         String targetClass = String.valueOf(parameters.get("target_class"));
         if (!TextUtils.isEmpty(targetClass)) {
             Intent intent = new Intent();

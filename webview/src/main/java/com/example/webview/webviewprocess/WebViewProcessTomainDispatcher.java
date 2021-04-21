@@ -8,6 +8,8 @@ import android.os.IBinder;
 import android.os.RemoteException;
 
 import com.example.base.BaseApplication;
+import com.example.webview.BaseWebView;
+import com.example.webview.ICallbackMainprocessToWebViewPorcessInterface;
 import com.example.webview.IWebviewProcessToMainProcessInterface;
 import com.example.webview.mainprocess.MainProcessService;
 
@@ -51,13 +53,20 @@ public class WebViewProcessTomainDispatcher implements ServiceConnection {
 
     }
 
-    public void executeCommand(String commandName, String parasm) {
+    public void executeCommand(String commandName, String parasm, BaseWebView webView) {
         if (iWebviewProcessToMainProcessInterface != null) {
             try {
-                iWebviewProcessToMainProcessInterface.handleWebCommand(commandName,parasm);
+                iWebviewProcessToMainProcessInterface.handleWebCommand(commandName,parasm, new ICallbackMainprocessToWebViewPorcessInterface.Stub() {
+                    @Override
+                    public void onResult(String callbackname, String response) throws RemoteException {
+                        webView.handleCallback(callbackname,response);
+                    }
+                });
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
 }
