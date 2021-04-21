@@ -1,19 +1,20 @@
 package com.example.webview.mainprocess;
 
-import android.content.ComponentName;
-import android.content.Intent;
 import android.os.RemoteException;
-import android.text.TextUtils;
 
-import com.example.base.BaseApplication;
 import com.example.webview.IWebviewProcessToMainProcessInterface;
+import com.example.webview.command.Command;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 public class MainProcessCommandsManager extends IWebviewProcessToMainProcessInterface.Stub {
 
     private static MainProcessCommandsManager sInstance;
+
+    private HashMap<String,Command> commandHashMap = new HashMap<>();
 
     public static MainProcessCommandsManager getInstance() {
         if (sInstance == null) {
@@ -26,16 +27,17 @@ public class MainProcessCommandsManager extends IWebviewProcessToMainProcessInte
         return sInstance;
     }
 
-    public void executeCommand(String commandName, Map params) {
-        if ("openPage".equalsIgnoreCase(commandName)) {
-            String targetClass = String.valueOf(params.get("target_class"));
-            if (!TextUtils.isEmpty(targetClass)) {
-                Intent intent = new Intent();
-                intent.setComponent(new ComponentName(BaseApplication.application,targetClass));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                BaseApplication.application.startActivity(intent);
+    private MainProcessCommandsManager(){
+        ServiceLoader<Command> commandServiceLoader = ServiceLoader.load(Command.class);
+        for (Command command : commandServiceLoader) {
+            if(!commandHashMap.containsKey(command.name())){
+                commandHashMap.put(command.name(),command);
             }
         }
+    }
+
+    public void executeCommand(String commandName, Map params) {
+        commandHashMap.get(commandName).execute(params);
     }
 
     @Override
